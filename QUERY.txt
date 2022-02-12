@@ -1,0 +1,15 @@
+DELIMITER $$
+CREATE TRIGGER testref 
+AFTER UPDATE ON apply
+FOR EACH ROW BEGIN
+INSERT INTO club_member 
+SET 
+학번 = new.학번,
+이름 = new.이름,
+학과 = new.학과,
+사용자_권한 = null,
+동아리_이름 = new.지원한_동아리,
+이메일 = new.이메일;
+DELETE FROM apply where 학번 = Old.학번;
+end $$
+DELIMITER ;
